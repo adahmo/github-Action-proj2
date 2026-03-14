@@ -1,3 +1,4 @@
+#Name: Static site CICD workflow
 name: Static Site CI/CD
 
 on:
