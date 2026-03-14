@@ -4,6 +4,9 @@ on:
   push:
   workflow_dispatch:
 
+env:
+  FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
+
 permissions:
   contents: read
 
@@ -45,7 +48,10 @@ jobs:
     needs: ci
     if: github.event_name == 'push' && github.ref == format('refs/heads/{0}', github.event.repository.default_branch)
     runs-on: ubuntu-latest
+    env:
+      PAGES_ADMIN_TOKEN: ${{ secrets.PAGES_ADMIN_TOKEN }}
     permissions:
+      contents: read
       pages: write
       id-token: write
     environment:
@@ -55,16 +61,47 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v5
 
+      - name: Check if Pages is already enabled
+        id: pages_status
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const { owner, repo } = context.repo;
+            try {
+              await github.request('GET /repos/{owner}/{repo}/pages', { owner, repo });
+              core.info('Pages site is already enabled.');
+              core.setOutput('enabled', 'true');
+            } catch (error) {
+              if (error.status === 404) {
+                core.warning('Pages site is not enabled yet.');
+                core.setOutput('enabled', 'false');
+              } else {
+                throw error;
+              }
+            }
+
       - name: Setup Pages
+        if: steps.pages_status.outputs.enabled == 'true' || env.PAGES_ADMIN_TOKEN != ''
         uses: actions/configure-pages@v5
         with:
-          enablement: true
+          token: ${{ env.PAGES_ADMIN_TOKEN != '' && env.PAGES_ADMIN_TOKEN || github.token }}
+          enablement: ${{ steps.pages_status.outputs.enabled != 'true' }}
+
+      - name: Require manual Pages enablement or admin token
+        if: steps.pages_status.outputs.enabled != 'true' && env.PAGES_ADMIN_TOKEN == ''
+        run: |
+          echo "::error::GitHub Pages is not enabled for this repository and GITHUB_TOKEN cannot create it."
+          echo "::error::Either enable Pages manually in Settings > Pages with Source set to GitHub Actions, or add a repository secret named PAGES_ADMIN_TOKEN."
+          echo "::error::PAGES_ADMIN_TOKEN must be a PAT with repo (classic) or Administration:write + Pages:write (fine-grained)."
+          exit 1
 
       - name: Upload site artifact
+        if: steps.pages_status.outputs.enabled == 'true' || env.PAGES_ADMIN_TOKEN != ''
         uses: actions/upload-pages-artifact@v4
         with:
           path: .
 
       - name: Deploy site
+        if: steps.pages_status.outputs.enabled == 'true' || env.PAGES_ADMIN_TOKEN != ''
         id: deployment
         uses: actions/deploy-pages@v4
