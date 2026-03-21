@@ -13,7 +13,7 @@ This project covers three tasks:
 
 1. Update a static frontend project.
 2. Add a CI/CD workflow with GitHub Actions.
-3. Prepare the repository for review with screenshots and slides.
+3. Prepare the repository for review with screenshots.
 
 ## Technology Stack
 
@@ -51,8 +51,6 @@ The workflow does three things:
 |-- docs/
 |   |-- screenshots/
 |   |   `-- README.md
-|   `-- slides/
-|       `-- SLIDES_OUTLINE.md
 |-- ABOUT THIS TEMPLATE.txt
 |-- index.html
 `-- README.md
@@ -84,7 +82,6 @@ Add screenshots to [docs/screenshots](docs/screenshots) with the exact filenames
 5. 05-repository-file-structure.png
 6. 06-mobile-responsive-view.png
 7. 07-linkedin-featured-section.png
-8. 08-slide-deck-cover.png
 
 After you add the files, the image sections below will render automatically.
 
@@ -116,28 +113,12 @@ After you add the files, the image sections below will render automatically.
 
 ![LinkedIn featured section](docs/screenshots/07-linkedin-featured-section.png)
 
-### Screenshot 8: Slide Deck Cover
-
-![Slide deck cover](docs/screenshots/08-slide-deck-cover.png)
-
-## Slide Deck Assets
-
-Use [docs/slides/SLIDES_OUTLINE.md](docs/slides/SLIDES_OUTLINE.md) as the base outline for the slide deck.
-
-Use [docs/slides/SLIDE_TEXT.md](docs/slides/SLIDE_TEXT.md) for paste-ready slide wording.
-
-When the deck is ready, save these files in [docs/slides](docs/slides):
-
-- engineer-review-deck.pptx
-- engineer-review-deck.pdf
-
 ## Review Order
 
 1. Open the live website.
 2. Review the workflow in [.github/workflows/ci-cd.yml](.github/workflows/ci-cd.yml).
 3. Check the Actions tab for deployment runs.
 4. Read this README.
-5. Open the slide deck from [docs/slides](docs/slides).
 
 ## Notes
 
@@ -148,5 +129,5 @@ When the deck is ready, save these files in [docs/slides](docs/slides):
 ## Before Sharing
 
 1. Add your screenshots to [docs/screenshots](docs/screenshots).
-2. Export and add the final slides to [docs/slides](docs/slides).
+2. Confirm all screenshot previews render in this README.
 3. Pin this repository in your GitHub profile.

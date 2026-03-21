@@ -11,7 +11,6 @@ Store screenshots in this folder with the exact filenames listed below.
 5. 05-repository-file-structure.png
 6. 06-mobile-responsive-view.png
 7. 07-linkedin-featured-section.png
-8. 08-slide-deck-cover.png
 
 ## Capture Tips
 
@@ -28,4 +27,3 @@ Store screenshots in this folder with the exact filenames listed below.
 3. Capture Pages deployment environment details.
 4. Capture the repository structure and key files.
 5. Capture LinkedIn Featured section after profile update.
-6. Capture the slide deck cover after the presentation is ready.
